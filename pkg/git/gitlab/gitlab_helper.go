@@ -26,6 +26,7 @@ import (
 
 	"github.com/konflux-ci/build-service/pkg/boerrors"
 	gp "github.com/konflux-ci/build-service/pkg/git/gitprovider"
+	ctrl "sigs.k8s.io/controller-runtime"
 
 	"net/url"
 )
@@ -376,9 +377,12 @@ func getPaCWebhookOpts(webhookTargetUrl, webhookSecret string) *gitlab.AddProjec
 
 // IsRepositoryPublic returns true if the repository could be accessed without authentication
 func (g *GitlabClient) getProjectInfo(projectPath string) (*gitlab.Project, error) {
+	log := ctrl.Log.WithName("gitlab")
 	project, resp, err := g.client.Projects.GetProject(projectPath, &gitlab.GetProjectOptions{})
 	if err != nil {
-		if resp.StatusCode == 404 {
+		if resp == nil {
+			log.Info("Got a nil response from Gitlab client", "err", err)
+		} else if resp.StatusCode == 404 {
 			return nil, nil
 		}
 		return nil, err
