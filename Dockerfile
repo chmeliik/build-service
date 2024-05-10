@@ -26,10 +26,12 @@ FROM registry.access.redhat.com/ubi9/ubi-minimal:9.3
 COPY --from=builder /opt/app-root/src/manager /
 USER 65532:65532
 
+LABEL name="build-service"
 LABEL description="RHTAP Build Service operator"
 LABEL io.k8s.description="RHTAP Build Service operator"
 LABEL io.k8s.display-name="build-service-operator"
 LABEL io.openshift.tags="rhtap"
 LABEL summary="RHTAP Build Service"
+LABEL com.redhat.component="build-service-operator"
 
 ENTRYPOINT ["/manager"]
