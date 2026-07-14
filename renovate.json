@@ -3,37 +3,17 @@
   "extends": [
     "config:recommended"
   ],
-  "packageRules": [
-    {
-      "matchPackageNames": [
-        "registry.access.redhat.com/ubi9/go-toolset"
-      ],
-      "allowedVersions": "<2"
-    },
-    {
-      "description": "Automerge GitHub Actions updates",
-      "matchManagers": [
-        "github-actions"
-      ],
-      "automerge": true
-    },
-    {
-      "description": "Go minor updates",
-      "matchManagers": ["gomod"],
-      "matchUpdateTypes": ["minor"],
-      "groupName": "go minor dependencies"
-    },
-    {
-      "description": "Go patch updates",
-      "matchManagers": ["gomod"],
-      "matchUpdateTypes": ["patch"],
-      "groupName": "go patch dependencies"
-    },
-    {
-      "description": "Go digest updates",
-      "matchManagers": ["gomod"],
-      "matchUpdateTypes": ["digest"],
-      "groupName": "go digest dependencies"
-    }
-  ]
+  "enabledManagers": [
+    "tekton"
+  ],
+  "tekton": {
+    "managerFilePatterns": [
+      "/\\.yaml$/",
+      "/\\.yml$/"
+    ],
+    "includePaths": [
+      ".tekton/**"
+    ],
+    "groupName": "tekton tasks"
+  }
 }
