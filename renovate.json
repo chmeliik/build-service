@@ -7,7 +7,7 @@
     "tekton"
   ],
   "tekton": {
-    "versioning": "semver-partial",
+    "versioning": "semver-coerced",
     "managerFilePatterns": [
       "/\\.yaml$/",
       "/\\.yml$/"
